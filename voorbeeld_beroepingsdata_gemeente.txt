@@ -1,0 +1,139 @@
+15-01-1893;
+===
+05; ds. M. Schouten (Marten) ; 09-10-1898 ; kandidaat ; 22-11-1903 ; Bunschoten ;05;
+13; ds. J.J. van der Schuit (Jacob Jan) ; 10-11-1907 ; kandidaat Gravenhage ; ??-11-1914 ; Amsterdam-West ;17;
+12; ds. J. van der Vegt (Jan) ; 06-08-1916 ; Rijnsburg ; 25-04-1920 ; Harderwijk ;04;
+05; ds. H. Velema (Hendrik) ; 13-03-1921 ; Gravendeel ; ??-06-1923 ; Noordeloos ;06;
+10; ds. K.G. van Smeden (Klaas Gerrit) ; 30-01-1925 ; kandidaat ; ??-09-1928 ; Haarlem-Noord ;10;
+09; ds. B. Oosthoek (Bastiaan) ; 05-02-1930 ; Dokkum ; 05-02-1934 ; overleden ;01;
+01; ds. W. Ramaker (Willem) ; 25-11-1934 ; Harlingen ; 01-08-1943 ; overleden ;03;
+02; ds. B. van Smeden (Bauke) ; 02-09-1945 ; kandidaat Groningen ; ??-01-1950 ; Rotterdam-Zuid ;06;
+17; ds. S. van Zwoll (Simon) ; 08-11-1953 ; kandidaat Rotterdam ; 12-04-1961 ; Eindhoven ;07;
+01; ds. J.H. Carlier ; 21-06-1961 ; Zutphen ; ??-06-1967 ; Leiden ;03;
+02; ds. J.J. de Jonge (Jan Johannes) ; 19-11-1967 ; Noordscheschut ; ??-06-1976 ; Stadskanaal ;05;
+01; ds. T. Brienen (Teunis) ; 18-11-1976 ; Groningen ; 20-06-1982 ; Gorinchem ;01;
+01; ds. J.C.L. Starreveld (Jacobus Cornelis Leendert); 31-10-1982 ; Delft ; 16-06-1996 ; Bunschoten ;02;
+03; ds. A. Brons (Aart) ; 19-10-1997 ; Wildervank-Veendam-Zuidlaren ; 31-08-2011 ; Israelconsulent ;01;
+05; ds. A. Hakvoort (Albert) ; 23-08-2015 ; Middelburg ; 12-01-2025 ; Amersfoort ;01;
+ ; ; ; ; ; ; -;
+ ; predikant bijzondere werkzaamheden ; ; ; ; ; ;
+ ; ds. T. Peppink (Theodorus)(schoolpastoraat) ; 03-09-1978; Emmen ; 29-09-2002 ; overleden ; ;
+===
+ 
+===
+;1893;;;;
+01; ??-12-1897 ; J. Schotel ; Haarlem ; ;
+02; ??-05-1898 ; G.A. Gezelle Meerburg; Almelo ; ;
+03; ??-07-1898 ; J. Schotel (2e keer) ; Haarlem ; ;
+04; ??-08-1898 ; H. Jansen ; kandidaat Gravenhage ; ;
+05; ??-08-1898 ; M. Schouten ; kandidaat ; ;
+---
+;1903;;;;
+01; ??-01-1904 ; L.H. Beekamp ; Delft ; ;
+02; ??-03-1904 ; J.W. Polman ; Murmerwoude ; ;
+03; ??-08-1904 ; J. Jansen ; kandidaat Arnhem ; ;
+04; ??-12-1904 ; G. Oosterhuis ; Urk ; ;
+05; ??-02-1905 ; F. Lengkeek ; Harlingen ; ;
+06; ??-05-1905 ; A. van der Heijden ; Dordrecht ; ;
+07; ??-09-1905 ; L.H. Beekamp (2e keer); Delft ; ;
+08; ??-12-1905 ; H.J.L. de Vries ; Groningen ; ;
+09; ??-09-1906 ; P. de Groot ; kandidaat Kampen ; ;
+10; ??-11-1906 ; M. den Boer ; Zaandam ; ;
+11; ??-12-1906 ; J. Jansen (2e keer) ; Oud-Beijerland ; ;
+12; ??-02-1907 ; L. de Bruyne ; kandidaat Vlissingen ; ;
+13; ??-07-1907 ; J.J. van der Schuit ; kandidaat Gravenhage ; ;
+---
+;1914;;;;
+01; ??-10-1914 ; J. Jansen ; Utrecht ; ;
+02; ??-12-1914 ; L.H. van der Meiden ; Enschede ; ;
+03; ??-09-1914 ; A. van der Heijden ; docent Gravenhage ; ;
+04; ??-02-1915 ; J. de Bruin ; Broek op Langedijk ; ;
+05; ??-06-1915 ; P. de Groot ; Rotterdam ; ;
+06; ??-07-1915 ; J.A. Riekel ; kandidaat Gravenhage ; ;
+07; ??-09-1915 ; A. van der Heijden (2e keer); docent Gravenhage ; ;
+08; ??-10-1915 ; L.H. van der Meiden (2e keer); Enschede ; ;
+09; ??-12-1915 ; A.M. Berkhoff ; Zwolle ; ;
+10; ??-01-1916 ; J.J. van der Schuit ; Amsterdam-West ; ;
+11; ??-04-1916 ; H. Hoogendoorn ; Zaandam ; ;
+12; ??-06-1916 ; J. van der Vegt ; Rijnsburg ; ;
+---
+;1920;;;;
+01; ??-05-1920 ; J.P. Vreugdenhil ; Sliedrecht ; ;
+02; ??-07-1920 ; H. Hoogendoorn ; Lisse ; ;
+03; ??-08-1920 ; H. Visser ; Leeuwarden ; ;
+04; ??-10-1920 ; J.W. Polman ; Almelo ; ;
+05; ??-12-1920 ; H. Velema ; Gravendeel ; ;
+---
+;1923;;;;
+01; ??-05-1923 ; G. Wisse ; Arnhem ; ;
+02; ??-08-1923 ; A. Zwiep ; kandidaat Rotterdam ; ;
+03; ??-09-1923 ; W. Bijleveld ; Haarlem ; ;
+04; ??-11-1923 ; J. Jansen ; Leiden ; ;
+05; ??-01-1924 ; J.P. Meijering ; Nieuwpoort ; ;
+06; ??-02-1924 ; J.L. de Vries ; Rijnsburg ; ;
+07; ??-05-1924 ; L.H. Beekamp ; Rozenburg ; ;
+08; ??-07-1924 ; L.H. van der Meiden ; Dordrecht ; ;
+09; ??-08-1924 ; J. Hovius ; kandidaat Kornhorn ; ;
+10; ??-11-1924 ; K.G. van Smeden ; kandidaat Zwolle ; ;
+---
+;1928;;;;
+01; ??-08-1928 ; K. Bokhorst ; kandidaat Elburg ; ;
+02; ??-11-1928 ; P.J. de Bruin ; Veenendaal ; ;
+03; ??-12-1928 ; C.S. van der Ven ; Arnhem ; ;
+04; ??-02-1929 ; W. Bijleveld ; Haarlem-Centrum ; ;
+05; ??-04-1929 ; M. Holtrop ; Franeker ; ;
+06; ??-08-1929 ; B. Oosthoek ; Dokkum ; ;
+07; ??-11-1929 ; L. Holtrigter ; kandidaat Nieuwendam ; ;
+08; ??-07-1930 ; N. Brandsma ; kandidaat Arnhem ; ;
+09; ??-10-1930 ; B. Oosthoek (2e keer) ; Dokkum ; ;
+---
+;1934;;;;
+01; ??-08-1934 ; W. Ramaker ; Harlingen ; ;
+---
+;1943;;;;
+01; ??-06-1944 ; J.P. Geels ; Aalsmeer ; ;
+02; ??-08-1944 ; B. van Smeden ; kandidaat Groningen ; ;
+---
+;1950;;;;
+01; ??-10-1949 ; J.H. Velema ; Bunschoten-Spakenburg ; ;
+02; ??-01-1950 ; I. de Bruyne ; Hilversum ; ;
+03; ??-02-1950 ; D. Henstra ; Broek op Langedijk ; ;
+04; ??-03-1950 ; C. van der Weele ; Harderwijk ; ;
+05; ??-05-1950 ; M. Holtrop ; Haarlem-Centrum ; ;
+06; ??-07-1950 ; S. van der Molen ; Leeuwarden ; ;
+07; ??-09-1950 ; C.J.P. Sobering ; legerpred. Apeldoorn ; ;
+08; ??-01-1951 ; B. Nederlof ; Dokkum ; ;
+09; ??-04-1951 ; N. Brandsma ; Rijnsburg ; ;
+10; ??-06-1951 ; D.H. Biesma ; Hoogeveen ; ;
+11; ??-07-1951 ; B. Bijleveld ; kandidaat Haarlem ; ;
+12; ??-09-1951 ; A.C. Noort ; Nieuwe-Pekela ; ;
+13; ??-11-1951 ; W. Kremer ; Apeldoorn ; ;
+14; ??-03-1952 ; R.J. van Pagee ; kandidaat Apeldoorn ; ;
+15; ??-06-1952 ; M.W. Nieuwenhuijze ; Gravenhage-Centrum ; ;
+16; ??-11-1952 ; J.M. Visser ; Enschede ; ;
+17; ??-07-1953 ; S. van Zwoll ; kandidaat Rotterdam ; ;
+---
+;1961;;;;
+01; ??-01-1961 ; J.H. Carlier ; Zutphen ; ;
+---
+;1967;;;;
+01; ??-05-1967 ; H. Biesma ; Stadskanaal ; ;
+02; ??-08-1967 ; J.J. de Jonge ; Noordscheschut ; ;
+---
+;1976;;;;
+01; ??-07-1976 ; dr. T. Brienen ; Groningen ; ;
+---
+;1982;;;;
+01; ??-07-1982 ; J.C.L. Starreveld ; Delft ; ;
+---
+;1996;;;;
+01; 25-06-1996 ; C. van Atten ; Aalsmeer ; ;
+02; 07-04-1997 ; S. Otten ; Rotterdam-Zuid ; ;
+03; 10-06-1997 ; A. Brons ; Wildervank-Veendam-Zuidlaren ; ;
+---
+;2011;;;;
+01; 07-04-2013 ; R.G. den Hertog ; Zutphen ;07;
+02; 22-09-2013 ; F.W. van der Rhee ; Rotterdam-Oost-Capelle aan den IJssel;02;
+03; 19-01-2014 ; C.C. den Hertog ; Surhuisterveen ;04;
+04; 15-06-2014 ; J. Breman ; Zwijndrecht ;02;
+05; 01-02-2015 ; A. Hakvoort ; Middelburg ;03;
