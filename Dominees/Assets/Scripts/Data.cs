@@ -1,6 +1,68 @@
 using UnityEngine;
 using System.Collections.Generic;   // Gebruikt voor Lists.
 
+// Een simpele 'Gemeente' class die alle data uit een gemeente bevat.
+[System.Serializable]
+public class Gemeente
+{
+    public string gemeente;         // De naam van de gemeente.
+    public string gemeenteid;       // De id van de gemeente.
+    public string classis;          // De classis van de gemeente. (Regionaal samenwerkingsverband van protestantse kerken of gemeenten)
+    public string provincie;        // De provincie waar het gebouw van de gemeente staat.
+    public string ring;             // Vaak leeg, maar dit is een kleinere, geografische onderverdeling binnen een classis.
+    public List<Vacature> beroepen = new List<Vacature>();                  // Een lijst van alle vacatures die de gemeente heeft gehad. Deze bevat weer een lijst met alle beroepen die tijdens die vaccature zijn uitgebracht.
+    public List<GemeenteDominee> dominees = new List<GemeenteDominee>();    // Een lijst van elle dominees die een gemeente heeft gehad. Deze bevat velden als naam, herkomst, vervolg, ect.
+    public bool uitzending;         // In Dominees.nl tekst die 'ja' of 'nee' bevat, deze klopt lang niet altijd.
+    public string bijgewerkt;       // Wanneer de data van deze gemeente het laatste is bijgewerkt.
+    public string voortgekomen;     // Sommige gemeentes waren eerst onderdeel van een andere kerk, maar zijn opgesplitst. Vanuit welke gemeente is deze gemeente voortgekomen?
+    public string opgegaan;         // Sommige gemeentes zijn samengegaan met een andere gemeente. In welke gemeente is deze gemeente opgegaan?
+}
+
+// Een simpele 'Vacature' class die de datum en alle beroepen van de vacature bevat.
+[System.Serializable]
+public class Vacature
+{
+    public string begindatum;      // De datum vanaf wanneer de gemeente vaccant is.
+    public List<Beroep> beroepen = new List<Beroep>();  // Een lijst met alle beroepen die tijdens deze vaccature zijn uitgebracht.
+}
+
+// Een simpele 'GemeenteDominee' class die alle dominees die een gemeente heeft gehad bevat.
+[System.Serializable]
+public class GemeenteDominee
+{
+    public string ber;              // Aantal uitgebrachte beroepen in voorafgaande vacaturetijd.
+    public string naam;             // Voorletter + Achternaam dominee.
+    public string intrede;          // De datum van intrede.
+    public string herkomst;         // De vorige gemeente waar deze dominee heeft gewerkt. Dit kan 'kandidaat' zijn.
+    public string afscheid;         // De datum van afscheid/losmaking.
+    public string vervolg;          // De gemeente waar de dominee naar toe is vertrokken. Dit kan 'overleden' zijn.
+    public string ber2;             // Aantal uitgebrachte beroepen op predikant tijdens verblijf.
+}
+
+// Een simpele 'Beroep' class die alle data uit een beroep bevat.
+[System.Serializable]
+public class Beroep
+{
+    public string ber;              // Aantal uitgebrachte beroepen in huidige vacature door betreffende gemeente.
+    public string gemeente;         // Gemeente die het beroep heeft uitgebracht.
+    public string persoon;          // Voorletter + Achternaam dominee.
+    public string herkomst;         // Originele gemeente van deze dominee.
+    public string beslissing;       // Heeft de dominee het beroep aangenomen of bedankt? (Waar: aan = aangenomen en bed = bedankt)
+    public string ber2;             // Aantal ontvangen beroepen door betreffende persoon in huidige herkomstsituatie.
+    public string datum;            // De datum dat het beroep is geplaatst.
+}
+
+// Een simpele 'Overleden' class die alle data uit een overlijdensmelding bevat.
+[System.Serializable]
+public class Overleden
+{
+    public string naam;             // Voorletter + Achternaam dominee.
+    public string geboortedatum;    // De geboortedatum van de overleden dominee.
+    public string overlijdensdatum; // De overlijdensdatum van de overleden dominee.
+    public string gemeentes;        // Een lijst met alle gemeentes waar een dominee heeft gewerkt (gescheiden door ',')
+    public string bijzonderheden;   // Bevat soms een klein verhaaltje, of data over de begrafenisdienst (zoals datum, tijd en locatie).
+}
+
 // Een simpele 'Genootschap' class om snel bij belangrijke afkortingen te kunnen.
 [System.Serializable]
 public class Genootschap : MonoBehaviour
@@ -11,7 +73,7 @@ public class Genootschap : MonoBehaviour
 
     public static Genootschap Instance;
 
-    // Omzet naar volledige officiele namen zoals ze staan in de RCE dataset.
+        // Omzet naar volledige officiele namen zoals ze staan in de RCE dataset.
     // (Voor omzet zie:  https://data.cultureelerfgoed.nl/term/id/rn/2/364c9485-22d8-4962-8713-7fdf1910c553.html en https://dominees.nl/gemeentes.php)
     public string FormateerEnkelGenooschap(string input)
     {
@@ -102,52 +164,4 @@ public class Genootschap : MonoBehaviour
         else
             return false;
     }
-}
-
-// Een simpele 'Gemeente' class die alle data uit een gemeente bevat.
-[System.Serializable]
-public class Gemeente
-{
-    public string gemeente;         // De naam van de gemeente.
-    public string gemeenteid;       // De id van de gemeente.
-    public string classis;          // De classis van de gemeente. (Regionaal samenwerkingsverband van protestantse kerken of gemeenten)
-    public string provincie;        // De provincie waar het gebouw van de gemeente staat.
-    public string ring;             // Vaak leeg, maar dit is een kleinere, geografische onderverdeling binnen een classis.
-    public List<Vacature> beroepen = new List<Vacature>();       // Een lijst van alle vacatures die de gemeente heeft gehad. Deze bevat weer een lijst met alle beroepen die tijdens die vaccature zijn uitgebracht.
-    public bool uitzending;         // In Dominees.nl tekst die 'ja' of 'nee' bevat, deze klopt lang niet altijd.
-    public string bijgewerkt;       // Wanneer de data van deze gemeente het laatste is bijgewerkt.
-    public string voortgekomen;     // Sommige gemeentes waren eerst onderdeel van een andere kerk, maar zijn opgesplitst. Vanuit welke gemeente is deze gemeente voortgekomen?
-    public string opgegaan;         // Sommige gemeentes zijn samengegaan met een andere gemeente. In welke gemeente is deze gemeente opgegaan?
-}
-
-// Een simpele 'Vacature' class die de datum en alle beroepen van de vacature bevat.
-[System.Serializable]
-public class Vacature
-{
-    public string begindatum;      // De datum vanaf wanneer de gemeente vaccant is.
-    public List<Beroep> beroepen = new List<Beroep>();  // Een lijst met alle beroepen die tijdens deze vaccature zijn uitgebracht.
-}
-
-// Een simpele 'Beroep' class die alle data uit een beroep bevat.
-[System.Serializable]
-public class Beroep
-{
-    public string ber;              // Aantal uitgebrachte beroepen in huidige vacature door betreffende gemeente.
-    public string gemeente;         // Gemeente die het beroep heeft uitgebracht.
-    public string persoon;          // Voorletter + Achternaam dominee.
-    public string herkomst;         // Originele gemeente van deze dominee.
-    public string beslissing;       // Heeft de dominee het beroep aangenomen of bedankt? (Waar: aan = aangenomen en bed = bedankt)
-    public string ber2;             // Aantal ontvangen beroepen door betreffende persoon in huidige herkomstsituatie.
-    public string datum;            // De datum dat het beroep is geplaatst.
-}
-
-// Een simpele 'Overleden' class die alle data uit een overlijdensmelding bevat.
-[System.Serializable]
-public class Overleden
-{
-    public string naam;             // De naam van de overleden dominee.
-    public string geboortedatum;    // De geboortedatum van de overleden dominee.
-    public string overlijdensdatum; // De overlijdensdatum van de overleden dominee.
-    public string gemeentes;        // Een lijst met alle gemeentes waar een dominee heeft gewerkt (gescheiden door ',')
-    public string bijzonderheden;   // Bevat soms een klein verhaaltje, of data over de begrafenisdienst (zoals datum, tijd en locatie).
 }

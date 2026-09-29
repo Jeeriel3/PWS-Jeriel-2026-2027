@@ -7,20 +7,16 @@ using System;                       // Gebruikt voor JsonUtility.
 using Newtonsoft.Json.Linq;         // Newsoft.Json extentie (Zie: https://www.newtonsoft.com/json)
 
 using TMPro;                        // Gebruikt om een simpele inputField te gebruiken om beroepen van verschillende data op te halen.
+using UnityEngine.UI;                        
 
 public class RequestData : MonoBehaviour
 {
-    // Veld om in de inspector in te vullen.
-    // Dit is de url waar de data vanuit wordt opgehaald.
-    // Voorbeeld: https://www.dominees.nl/GetBeroepen.php?q={Jaar}{Weeknummer}
-    public string fetchUrl = "https://www.dominees.nl/GetBeroepen.php?q={Jaar}{Weeknummer}";    // Voer standaard de template in voor makkelijke toegang.
 
     // 2 simpele references om een UI werking te testen.
     public TMP_InputField TestingInput;
     public TMP_Text beroepenOutputText;
 
-    // Een losse string om het resultaat van een fetch op te slaan.
-    private string result;
+    public ScrollRect rect;
 
     // Zodra de app opstart, runt Unity automatisch deze functie.
     void Start()
@@ -147,9 +143,9 @@ public class RequestData : MonoBehaviour
     }
 
     // De beroepen van een gemeente zijn op een vreselijke manier vormgegeven in de database.
-    // Bovenaan staat een datum. Dit is de start van een bovenste vaccature. (Vaccature.begindatum)
+    // Bovenaan staat een datum. Dit is de vorming van de kerk.
     // Daarna volgt een scheiding in de vorm van '==='.
-    // Vervolgens staat op elke regel een beroep zoals ook in VerwerkBeroepen() gebruikt wordt.
+    // Vervolgens staat op elke regel een dominee. Deze bevat verschillende informatie. Deze is te vinden in Data.GemeenteDominee
     // De vaccature eindigd weer met een scheiding van '==='.
     //
     // Daaronder staan de echte vaccatures. Deze starten met '==='.
@@ -164,12 +160,48 @@ public class RequestData : MonoBehaviour
         int eersteScheiding = data.IndexOf("===");                                      // Er zijn dus 2 datasets. De tweede dataset begint na de tweede '==='. Zoek eerst de eerste '===' op en slaan deze op in een int.
         int tweedeScheiding = -1;                                                       // Maak een int die direct op -1 staat voor de 2e scheiding.
 
+        string bovensteData = data.Substring(eersteScheiding + 3);                      // Maak een substring voor de bovenste data, om te verwerken naar beroepen.  
+
+        // Voordat de vaccatures worden bekeken moeten eerst alle GemeenteDominees worden ingesteld.
+        // Daarom worden eerst alle regels gesplitst in een aparte array met de naam 'regels'.
+        string[] regels = bovensteData.Split(
+            new[] { "\r\n", "\n" },
+            StringSplitOptions.RemoveEmptyEntries
+        );
+
+        // De volgende logica doen we voor elke regel in de array.
+        // Dit wordt dus voor elke vaccature en elk beroep herhaald.
+        foreach (string regel in regels)
+        {
+            string regelSchoon = regel.Trim();                                          // Versimpel de string (Verwijderd overbodige spaties/witregels).
+
+            string[] velden = regelSchoon.Split(';');                                   // Maak een array voor alle velden. Deze zijn gesplitst door ';'
+
+            // Als er 7 of meer velden zijn en het eerste veld niet leeg is, is dit een geldige vaccature.
+            if (velden.Length >= 7 && !string.IsNullOrWhiteSpace(velden[0]))
+            {
+                GemeenteDominee huidigeDominee = new GemeenteDominee();                 // Maak een nieuwe 'GemeenteDominee' aan.
+
+                huidigeDominee.ber = velden[0].Trim();
+                huidigeDominee.naam = velden[1].Trim();
+                huidigeDominee.intrede = velden[2].Trim();
+                huidigeDominee.herkomst = velden[3].Trim();
+                huidigeDominee.afscheid = velden[4].Trim();
+                huidigeDominee.vervolg = velden[5].Trim();
+                huidigeDominee.ber2 = velden[6].Trim();
+
+                gemeente.dominees.Add(huidigeDominee);                                  // En voeg de dominee toe aan de 'dominees' lijst in de 'Gemeente' class.
+
+                continue;                                                               // Dan kunnen we door.
+            }
+        }
+
         tweedeScheiding = data.IndexOf("===", eersteScheiding + 3);                     // Zoek daarna de tweede scheiding door de eerste scheiding + 3 te doen.
 
         data = data.Substring(tweedeScheiding + 3);                                     // Alles na de tweede === is de dataset die we willen hebben.
 
         // Maak daarna voor elke regel een eigen entery aan in de 'regel' array.
-        string[] regels = data.Split(
+        string[] regels1 = data.Split(
             new[] { "\r\n", "\n" },
             StringSplitOptions.RemoveEmptyEntries
         );
@@ -178,7 +210,7 @@ public class RequestData : MonoBehaviour
 
         // De volgende logica doen we voor elke regel in de array.
         // Dit wordt dus voor elke vaccature en elk beroep herhaald.
-        foreach (string regel in regels)
+        foreach (string regel in regels1)
         {
             string regelSchoon = regel.Trim();                                           // Versimpel de string (Verwijderd overbodige spaties/witregels).
 
@@ -366,6 +398,8 @@ public class RequestData : MonoBehaviour
     // de data goed gesplitst wordt.
     private void LogBeroepInhoud(Beroep beroep)
     {
+        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
+
         Debug.Log(
             $"Beroep ontvangen:\n" +
             $"ber: {beroep.ber}\n" +
@@ -387,7 +421,7 @@ public class RequestData : MonoBehaviour
             $"beslissing: {beroep.beslissing}\n" +
             $"ber2: {beroep.ber2}\n" +
             $"datum: {beroep.datum} \n" +
-            $"\n ====================================== \n \n"; //Simpele scheider + een witregel voor overzichtelijkheid.
+            $"\n ====================================== \n \n"; // Simpele scheider + een witregel voor overzichtelijkheid.
     }
 
     // Een simpele test-functie om de inhoud van een Gemeente
@@ -395,6 +429,8 @@ public class RequestData : MonoBehaviour
     // de data goed gesplitst wordt.
     private void LogGemeenteInhoud(Gemeente gemeente)
     {
+        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
+
         string output =
             $"Gemeente gevonden:\n" +
             $"gemeente: {gemeente.gemeente}\n" +
@@ -405,7 +441,22 @@ public class RequestData : MonoBehaviour
             $"bijgewerkt: {gemeente.bijgewerkt}\n" +
             $"voortgekomen: {gemeente.voortgekomen}\n" +
             $"opgegaan: {gemeente.opgegaan}\n" +
-            $"\n========== VACATURES / BEROEPEN ==========\n";
+            $"\n========== DOMINEES ==========\n";
+
+        foreach (GemeenteDominee dominee in gemeente.dominees)
+        {
+            output +=
+                $"\n--- DOMINEE ---\n" +
+                $"  ber: {dominee.ber}\n" +
+                $"  naam: {dominee.naam}\n" +
+                $"  intreden: {dominee.intrede}\n" +
+                $"  herkomst: {dominee.herkomst}\n" +
+                $"  afscheid: {dominee.afscheid}\n" +
+                $"  vervolg: {dominee.vervolg}\n" +
+                $"  ber2: {dominee.ber2}";
+        }
+
+        output += $"\n========== VACCATURES: ==========\n";
 
         foreach (Vacature vacature in gemeente.beroepen)
         {
@@ -439,6 +490,8 @@ public class RequestData : MonoBehaviour
     // de data goed gesplitst wordt.
     private void LogOverledenInhoud(Overleden overleden)
     {
+        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
+        
         Debug.Log(
             $"Overleden ontvangen:\n" +
             $"naam: {overleden.naam}\n" +
