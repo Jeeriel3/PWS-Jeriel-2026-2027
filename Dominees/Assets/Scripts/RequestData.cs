@@ -16,6 +16,8 @@ public class RequestData : MonoBehaviour
     public TMP_InputField TestingInput;
     public TMP_Text beroepenOutputText;
 
+    public FindLocation findLocation;    // Een reference naar de FindLocation.cs class, zodat we de functie kunnen gebruiken om een adres van een kerk te vinden.
+
     public ScrollRect rect;
 
     // Zodra de app opstart, runt Unity automatisch deze functie.
@@ -308,7 +310,21 @@ public class RequestData : MonoBehaviour
         gemeente.voortgekomen = json["0"]["voortgekomen"].ToString();
         gemeente.opgegaan = json["0"]["opgegaan"].ToString();
 
-        LogGemeenteInhoud(gemeente);                            // Log (voor nu) de informatie uit de 'Gemeente' class.
+        // Omdat de data van Dominees.nl geen adres of kerknaam bevat, wordt er een aparte functie aangeroepen om deze te vinden.
+        // Ik heb daarvoor FindLocation.cs gemaakt. Deze class kan een kerknaam opzoeken op DuckDuckGo zoeken en het adres en de website van de kerk teruggeven.
+        // Deze coroutines worden hieronder aangeroepen en de resultaten worden in de gemeente class opgeslagen.
+        // Het duurt even voordat het resultaat binnenkomt, daarom wordt er gebruik gemaakt van een callback functie en wordt de 'LogGemeenteInhoud()' pas aangeroepen als de resultaten binnen zijn.
+        StartCoroutine(findLocation.FindKerkInfo(json["0"]["gemeente"].ToString(), (succes) => {
+            if(succes)
+            {
+                gemeente.adres = findLocation.kerkadres;            // Het adres van de gemeente.
+                gemeente.kerk = findLocation.kerknaam;              // De naam van de kerk.
+                gemeente.website = findLocation.kerkwebsite;        // De website van de kerk.
+                gemeente.afbeelding = findLocation.kerkafbeelding;  // Een eventuele afbeelding van de kerk.
+            }
+
+            LogGemeenteInhoud(gemeente);                            // Log (voor nu) de informatie uit de 'Gemeente' class.
+        }));
     }
 
     // Alle overleden dominees staan op dezelfde manier in de database als alle beroepen.
@@ -434,9 +450,13 @@ public class RequestData : MonoBehaviour
         string output =
             $"Gemeente gevonden:\n" +
             $"gemeente: {gemeente.gemeente}\n" +
+            $"kerk: {gemeente.kerk}\n" +
+            $"afbeelding: {gemeente.afbeelding} \n" +
             $"gemeenteid: {gemeente.gemeenteid}\n" +
             $"classis: {gemeente.classis}\n" +
             $"provincie: {gemeente.provincie}\n" +
+            $"adres: {gemeente.adres}\n" +
+            $"website: {gemeente.website}\n" +
             $"uitzending: {gemeente.uitzending}\n" +
             $"bijgewerkt: {gemeente.bijgewerkt}\n" +
             $"voortgekomen: {gemeente.voortgekomen}\n" +

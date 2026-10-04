@@ -6,9 +6,13 @@ using System.Collections.Generic;   // Gebruikt voor Lists.
 public class Gemeente
 {
     public string gemeente;         // De naam van de gemeente.
+    public string kerk;             // De naam van de kerk van de gemeente. (Bijvoorbeeld: "Westerkerk" of "Eben-Haëzerkerk")
+    public string website;          // De link naar de website van de gemeente.
+    public string afbeelding;       // De url van een eventuele afbeelding van de kerk. Dit kan een logo of foto van het gebouw zijn.
     public string gemeenteid;       // De id van de gemeente.
     public string classis;          // De classis van de gemeente. (Regionaal samenwerkingsverband van protestantse kerken of gemeenten)
     public string provincie;        // De provincie waar het gebouw van de gemeente staat.
+    public string adres;            // Het adres van de gemeente in het format: "{Straat} {Huisnummer}, {Postcode} {Plaatsnaam}"
     public string ring;             // Vaak leeg, maar dit is een kleinere, geografische onderverdeling binnen een classis.
     public List<Vacature> beroepen = new List<Vacature>();                  // Een lijst van alle vacatures die de gemeente heeft gehad. Deze bevat weer een lijst met alle beroepen die tijdens die vaccature zijn uitgebracht.
     public List<GemeenteDominee> dominees = new List<GemeenteDominee>();    // Een lijst van elle dominees die een gemeente heeft gehad. Deze bevat velden als naam, herkomst, vervolg, ect.
