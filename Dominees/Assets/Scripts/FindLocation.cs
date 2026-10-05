@@ -14,6 +14,7 @@ public class FindLocation : MonoBehaviour
     public string kerkadres;                            // Het adres van het zoekresultaat.
     public string kerkwebsite;                          // De website van het zoekresultaat.
     public string kerkafbeelding;                       // Een url naar een afbeelding van de kerk.
+    public string kerkLogo;                             // Het logo van de kerk.
 
     public string succes = null;                        // Een boolean die aangeeft of het zoeken succesvol was.
 
@@ -131,6 +132,8 @@ public class FindLocation : MonoBehaviour
             string html = www.downloadHandler.text;                                     // Haal de HTML op van de response.
             string adres = ExtractAdres(html);                                          // Stuur de HTML door naar een functie die het adres eruit haalt.
             string afbeelding = ExtractAfbeelding(html, url);                           // Stuur de HTML door naar een functie die een afbleeding eruit haalt.
+            string logo = 
+            $"https://www.google.com/s2/favicons?domain={new Uri(url).Host}&sz=128";    // Stel het logo van de kerk in door gebruik te maken van de favicon-dienst van Google.
             resultaat.adres = adres;                                                    // Zet het adres in het resultaat.
             resultaat.afbeeldingUrl = afbeelding;                                       // Zet de afbeeldingUrl in het resultaat.
 
@@ -270,6 +273,7 @@ public class Resultaat
     public string url;              // De URL van het resultaat.
     public string adres;            // Het adres van het resultaat.
     public string afbeeldingUrl;    // De url van een eventuele afbeelding van de kerk of het logo.
+    public string logo;             // De url van het logo van de kerk. Dit maakt gebruik van de favicon-dienst van Google.
 
     public bool succes;             // Een boolean die aangeeft of het zoeken succesvol was.
 }

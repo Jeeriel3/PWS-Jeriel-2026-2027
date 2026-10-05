@@ -9,6 +9,7 @@ public class Gemeente
     public string kerk;             // De naam van de kerk van de gemeente. (Bijvoorbeeld: "Westerkerk" of "Eben-Haëzerkerk")
     public string website;          // De link naar de website van de gemeente.
     public string afbeelding;       // De url van een eventuele afbeelding van de kerk. Dit kan een logo of foto van het gebouw zijn.
+    public string logo;             // Het logo van de kerk. Dit is het logootje wat bovenin je Google browser staat en is wat kleine kwaliteit, maar goed te gebruiken.
     public string gemeenteid;       // De id van de gemeente.
     public string classis;          // De classis van de gemeente. (Regionaal samenwerkingsverband van protestantse kerken of gemeenten)
     public string provincie;        // De provincie waar het gebouw van de gemeente staat.

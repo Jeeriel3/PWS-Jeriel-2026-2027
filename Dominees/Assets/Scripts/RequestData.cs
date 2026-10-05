@@ -286,11 +286,11 @@ public class RequestData : MonoBehaviour
         Gemeente gemeente = new Gemeente();                         // Maak een nieuwe gemeente-object aan.
 
         // Voor alle enteries in de array zoek ik apart alles op
-        gemeente.gemeente = json["0"]["gemeente"].ToString();       // De naam van de gemeente.
-        gemeente.gemeenteid = json["0"]["gemeenteid"].ToString();   // De id van de gemeente.
-        gemeente.classis = json["0"]["classis"].ToString();
-        gemeente.provincie = json["0"]["provincie"].ToString();
-        gemeente.ring = json["0"]["ring"].ToString();
+        gemeente.gemeente   = json["0"]["gemeente"].ToString();       // De naam van de gemeente.
+        gemeente.gemeenteid = json["0"]["gemeenteid"].ToString();     // De id van de gemeente.
+        gemeente.classis    = json["0"]["classis"].ToString();
+        gemeente.provincie  = json["0"]["provincie"].ToString();
+        gemeente.ring       = json["0"]["ring"].ToString();
 
         // De beroepen staan in dit tabel hetzelfde als in de beroepen tabel.
         // Daarom wordt elk beroep apart behandeld en worden ze daarna aan de list 
@@ -306,9 +306,9 @@ public class RequestData : MonoBehaviour
             uitzending = false;
         gemeente.uitzending = uitzending;
 
-        gemeente.bijgewerkt = json["0"]["bijgewerkt"].ToString();
-        gemeente.voortgekomen = json["0"]["voortgekomen"].ToString();
-        gemeente.opgegaan = json["0"]["opgegaan"].ToString();
+        gemeente.bijgewerkt     = json["0"]["bijgewerkt"].ToString();
+        gemeente.voortgekomen   = json["0"]["voortgekomen"].ToString();
+        gemeente.opgegaan       = json["0"]["opgegaan"].ToString();
 
         // Omdat de data van Dominees.nl geen adres of kerknaam bevat, wordt er een aparte functie aangeroepen om deze te vinden.
         // Ik heb daarvoor FindLocation.cs gemaakt. Deze class kan een kerknaam opzoeken op DuckDuckGo zoeken en het adres en de website van de kerk teruggeven.
@@ -317,10 +317,11 @@ public class RequestData : MonoBehaviour
         StartCoroutine(findLocation.FindKerkInfo(json["0"]["gemeente"].ToString(), (succes) => {
             if(succes)
             {
-                gemeente.adres = findLocation.kerkadres;            // Het adres van de gemeente.
-                gemeente.kerk = findLocation.kerknaam;              // De naam van de kerk.
-                gemeente.website = findLocation.kerkwebsite;        // De website van de kerk.
-                gemeente.afbeelding = findLocation.kerkafbeelding;  // Een eventuele afbeelding van de kerk.
+                gemeente.adres      = findLocation.kerkadres;             // Het adres van de gemeente.
+                gemeente.kerk       = findLocation.kerknaam;              // De naam van de kerk.
+                gemeente.website    = findLocation.kerkwebsite;           // De website van de kerk.
+                gemeente.afbeelding = findLocation.kerkafbeelding;        // Een eventuele afbeelding van de kerk.
+                gemeente.logo       = findLocation.kerkLogo;              // Het logo van de kerk.
             }
 
             LogGemeenteInhoud(gemeente);                            // Log (voor nu) de informatie uit de 'Gemeente' class.
@@ -372,13 +373,13 @@ public class RequestData : MonoBehaviour
         Beroep beroep = new Beroep();                               // Maak een nieuwe instantie van een 'Beroep' class aan.
 
         // Vul elk veld 1 voor 1 in de juiste volgorde in:
-        beroep.ber = velden[0].Trim();
-        beroep.gemeente = velden[1].Trim();
-        beroep.persoon = velden[2].Trim();
-        beroep.herkomst = velden[3].Trim();
-        beroep.beslissing = velden[4].Trim();
-        beroep.ber2 = velden[5].Trim();
-        beroep.datum = velden[6].Trim();
+        beroep.ber          = velden[0].Trim();
+        beroep.gemeente     = velden[1].Trim();
+        beroep.persoon      = velden[2].Trim();
+        beroep.herkomst     = velden[3].Trim();
+        beroep.beslissing   = velden[4].Trim();
+        beroep.ber2         = velden[5].Trim();
+        beroep.datum        = velden[6].Trim();
 
         return beroep;
     }
@@ -400,11 +401,11 @@ public class RequestData : MonoBehaviour
         Overleden overleden = new Overleden();                      // Maak een nieuwe instantie van een 'Beroep' class aan.
 
         // Vul elk veld 1 voor 1 in de juiste volgorde in:
-        overleden.naam = velden[0].Trim();
-        overleden.geboortedatum = velden[1].Trim();
-        overleden.overlijdensdatum = velden[2].Trim();
-        overleden.gemeentes = velden[3].Trim();
-        overleden.bijzonderheden = velden[4].Trim();
+        overleden.naam              = velden[0].Trim();
+        overleden.geboortedatum     = velden[1].Trim();
+        overleden.overlijdensdatum  = velden[2].Trim();
+        overleden.gemeentes         = velden[3].Trim();
+        overleden.bijzonderheden    = velden[4].Trim();
 
         return overleden;                                            // Stuur de ingevulde 'Overlden' class terug.
     }
