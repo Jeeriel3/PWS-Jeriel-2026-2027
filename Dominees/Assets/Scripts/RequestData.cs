@@ -15,6 +15,7 @@ public class RequestData : MonoBehaviour
     // 2 simpele references om een UI werking te testen.
     public TMP_InputField TestingInput;
     public TMP_Text beroepenOutputText;
+    public RawImage gemeenteLogoImage;
 
     public FindLocation findLocation;    // Een reference naar de FindLocation.cs class, zodat we de functie kunnen gebruiken om een adres van een kerk te vinden.
 
@@ -410,6 +411,24 @@ public class RequestData : MonoBehaviour
         return overleden;                                            // Stuur de ingevulde 'Overlden' class terug.
     }
 
+    IEnumerator HaalAfbeeldingOp(string url, RawImage output)
+    {
+        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))    // Maak een nieuwe WebReqeustTexture voor de ingevoerde URL.
+        {
+            yield return www.SendWebRequest();                                  // Stuur de WebRequest en geef hem terug aan de functie.
+
+            if(www.result != UnityWebRequest.Result.Success)                    // Als er een fout was...
+            {
+                Debug.Log($"OEPS! {url} gaf een error: {www.error}");           // Loggen we de error.
+            }
+            else                                                                // Anders...
+            {
+                output.texture = DownloadHandlerTexture.GetContent(www);        // Downloaden we de texture en sturen stellen we de texture in op de output RawImage.
+                Debug.Log($"Logo succesvol ingesteld op afbeelding: {output}"); // Sturen we een log dat het gelukt is :)
+            }
+        }
+    }
+
     // Een simpele test-functie om de inhoud van een beroep
     // in de console te loggen, zodat ik kan zien of
     // de data goed gesplitst wordt.
@@ -446,7 +465,9 @@ public class RequestData : MonoBehaviour
     // de data goed gesplitst wordt.
     private void LogGemeenteInhoud(Gemeente gemeente)
     {
-        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
+        rect.verticalNormalizedPosition = 1;                                    // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
+
+        StartCoroutine(HaalAfbeeldingOp(gemeente.logo, gemeenteLogoImage));     // Haal de logo-afbeelding op en stel deze in, ondertussen kan de rest van de functie runnen.
 
         string output =
             $"Gemeente gevonden:\n" +

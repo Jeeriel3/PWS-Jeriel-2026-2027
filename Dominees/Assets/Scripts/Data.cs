@@ -70,7 +70,7 @@ public class Overleden
 
 // Een simpele 'Genootschap' class om snel bij belangrijke afkortingen te kunnen.
 [System.Serializable]
-public class Genootschap : MonoBehaviour
+public class Genootschap
 {
     public string officieleNaam;    // Volledige officiele naam (zoals: Nederlandse Gereformeerde Kerken).
     public string afkorting;        // De triviale afkorting (ook gebruikt in Dominees.nl), bijvoorbeeld: NGK.
@@ -78,7 +78,7 @@ public class Genootschap : MonoBehaviour
 
     public static Genootschap Instance;
 
-        // Omzet naar volledige officiele namen zoals ze staan in de RCE dataset.
+    // Omzet naar volledige officiele namen zoals ze staan in de RCE dataset.
     // (Voor omzet zie:  https://data.cultureelerfgoed.nl/term/id/rn/2/364c9485-22d8-4962-8713-7fdf1910c553.html en https://dominees.nl/gemeentes.php)
     public string FormateerEnkelGenooschap(string input)
     {

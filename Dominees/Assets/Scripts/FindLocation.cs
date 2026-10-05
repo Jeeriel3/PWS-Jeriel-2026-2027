@@ -23,7 +23,8 @@ public class FindLocation : MonoBehaviour
     {
         succes = null;                                                                  // Reset de 'succes' string
         resultaat = new Resultaat();                                                    // Maak een nieuw leeg 'Resultaat' aan
-        StartCoroutine(ZoekKerk(kerknaam));                                             // Start de zoek-coroutine
+        string kerk = DomineesNaamNaarZoekopdracht(kerknaam);                           // Formatteer de kerknaam naar een goede zoekopdracht
+        StartCoroutine(ZoekKerk(kerk));                                                 // Start de zoek-coroutine
         yield return new WaitUntil(() => succes != null);                               // Wacht totdat er een resultaat binnen is, true of false
         callback(succes == "true");                                                     // En stuur het resultaat terug
     }
@@ -133,19 +134,21 @@ public class FindLocation : MonoBehaviour
             string adres = ExtractAdres(html);                                          // Stuur de HTML door naar een functie die het adres eruit haalt.
             string afbeelding = ExtractAfbeelding(html, url);                           // Stuur de HTML door naar een functie die een afbleeding eruit haalt.
             string logo = 
-            $"https://www.google.com/s2/favicons?domain={new Uri(url).Host}&sz=128";    // Stel het logo van de kerk in door gebruik te maken van de favicon-dienst van Google.
+            $"https://www.google.com/s2/favicons?domain=https://{new Uri(url).Host}&sz=256";    // Stel het logo van de kerk in door gebruik te maken van de favicon-dienst van Google.
             resultaat.adres = adres;                                                    // Zet het adres in het resultaat.
             resultaat.afbeeldingUrl = afbeelding;                                       // Zet de afbeeldingUrl in het resultaat.
+            resultaat.logo = logo;                                                      // Zet de logourl in het resultaat.
 
             // Aangezien dit de laatste stap is kunnen we hieronder voor nu alle data van
             // het resultaat loggen in de console.
-            Debug.Log($"Resultaat: \n Naam:    {resultaat.naam}\n Adres:    {resultaat.adres} \n Bron:    {resultaat.url} \n Afbeeding: {resultaat.afbeeldingUrl}");
+            Debug.Log($"Resultaat: \n Naam:    {resultaat.naam}\n Adres:    {resultaat.adres} \n Bron:    {resultaat.url} \n Afbeeding: {resultaat.afbeeldingUrl} \n Logo: {resultaat.logo}");
 
             // Ook kunnen we het resultaat opslaan in de klasse-variabelen zodat we deze later kunnen gebruiken.
-            kerknaam = resultaat.naam;                                                  // Zet de kerknaam in de klasse-variabele.
-            kerkadres = resultaat.adres;                                                // Zet het kerkadres in de klasse-variabele.
-            kerkwebsite = resultaat.url;                                                // Zet de kerkwebsite in de klasse-variabele.
-            kerkafbeelding = resultaat.afbeeldingUrl;                                   // Zet de kerkafbeelding in de klasse-variabele.
+            kerknaam        = resultaat.naam;                                           // Zet de kerknaam in de klasse-variabele.
+            kerkadres       = resultaat.adres;                                          // Zet het kerkadres in de klasse-variabele.
+            kerkwebsite     = resultaat.url;                                            // Zet de kerkwebsite in de klasse-variabele.
+            kerkafbeelding  = resultaat.afbeeldingUrl;                                  // Zet de kerkafbeelding in de klasse-variabele.
+            kerkLogo        = resultaat.logo;                                           // Zet ook het logo van de kerk in de klasse-variabele.
             // Stel de 'succes' variabele in:
             if(resultaat.succes == true)
                 succes = "true";
@@ -263,6 +266,21 @@ public class FindLocation : MonoBehaviour
             }
         }
         return string.Join("\n", regels.ToArray());                                                                                             // Voeg alle regels weer samen en retun deze.
+    }
+
+    // Een simpele helper-functie die de kerknaam omzet naar een goede zoekopdracht.
+    // Zo kan je bij namen als: 'Kinderdijk HG' niet het resultaat 'HG - Doet wat het belooft!' krijgen,
+    // maar zoek je op 'Hervormde Gemeente in Kinderdijk' en krijg je het juiste resultaat :)
+    public string DomineesNaamNaarZoekopdracht(string input)
+    {
+        int laatsteStreepje = input.LastIndexOf(" ");                                           // Zoek de index van het laatste streepje.
+        string genootschapNaam = input.Substring(laatsteStreepje + 1);                          // Stel het genootschap in. Dit is dus alles na het streepje.
+
+        Genootschap genootschap = new Genootschap();                                            // Maak een nieuw genootschap aan.
+        genootschap.afkorting = genootschapNaam;                                                // Stel de afkorting in in de 'Genootschap' class
+
+        string volGenootschp = genootschap.FormateerEnkelGenooschap(genootschap.afkorting);     // Formatter de naam van het genootschap (van afkorting naar volledige naam).
+        return $"{volGenootschp} in {input.Substring(0, input.LastIndexOf(' '))} kerk";         // Stuur de volle geformatteerde naam terug. Dus het volle genootschap + 'in' + alles voor het laatste streepje + kerk (voor de duidelijkheid).
     }
 }
 
