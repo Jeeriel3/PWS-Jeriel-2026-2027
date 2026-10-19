@@ -42,6 +42,11 @@ public class RequestData : MonoBehaviour
         GetOverleden(TestingInput.text);
     }
 
+    public void GetDomineesFromInputField()
+    {
+        GetDominees(TestingInput.text);
+    }
+
     // Publieke API om beroepen op te halen vanuit het jaarweeknummer.
     // deze functie verwacht dus een input als '202638' om alle beroepen uit week 38 van 2026 op te halen. 
     // Ook kan je 'vandaag' invullen om alle beroepen van de huidige week snel op te halen.
@@ -67,11 +72,11 @@ public class RequestData : MonoBehaviour
     }
 
     // Publieke API om overleden dominees op te halen vanuit het huidige jaar.
-    // deze functie verwacht dus een input als '2026' om alle beroepen uit 2026 op te halen. 
-    // Ook kan je 'vandaag' invullen om alle beroepen van het huidige jaar snel op te halen.
+    // Deze functie verwacht dus een input als '2026' om alle overleden dominees uit 2026 op te halen. 
+    // Ook kan je 'vandaag' invullen om alle overleden dominees van het huidige jaar snel op te halen.
     public void GetOverleden(string input)
     {
-        if(input == "vandaag")                                                                                  // Als er 'vandaag' als input wordt gegeven
+        if(input == "vandaag")                                                                                  // Als er 'vandaag' als input wordt gegeven...
         {
             DateTime now = DateTime.Now;                                                                        // Vragen we de huidige systeemtijd op
 
@@ -83,6 +88,22 @@ public class RequestData : MonoBehaviour
         }
     }
 
+    // Publieke API om alle dominees op te halen vanuit het huidige jaar.
+    // Deze functie verwacht dus een input als '2026' om alle dominees uit 2026 op te halen.
+    // Ook kan je 'vandaag' invullen om alle dominees van het huidige jaar snel op te halen.
+    public void GetDominees(string input)
+    {
+        if(input == "vandaag")                                                                                  // Als er 'vandaag' als input wordt gegeven...
+        {
+            DateTime now = DateTime.Now;                                                                        // Vragen we de huidige systeemtijd op.
+
+            StartCoroutine(FetchData($"https://dominees.nl/GetKandidaten.php?q={now.Year}", "dominees"));       // Dan kan de data worden opgehaald vanuit het huidige jaar.
+        }
+        else
+        {
+            StartCoroutine(FetchData($"https://dominees.nl/GetKandidaten.php?q=input", "dominees"));            // Als de input gewoon een jaar is, kan de data direct worden opgehaald.
+        }
+    }
 
     // Een simpele Coroutune om data op te halen.
     // Dominees.nl heeft een pagina die de data in een .json formaat teruggeeft.
@@ -92,7 +113,7 @@ public class RequestData : MonoBehaviour
     {
         beroepenOutputText.text = null;                                             // Oude beroepen uit de UI text verwijderen.
 
-        UnityWebRequest www = UnityWebRequest.Get(url);                             // Haal data op uit de url: '_url'
+        UnityWebRequest www = UnityWebRequest.Get(url);                             // Haal data op uit de url: 'url'
         yield return www.SendWebRequest();                                          // Return de data naar de UnityWebRequest.
 
         if(www.result != UnityWebRequest.Result.Success)                            // Check of de request succesvol is.
@@ -114,6 +135,8 @@ public class RequestData : MonoBehaviour
                 VerwerkGemeente(resultaat);
             if(type == "overleden")
                 VerwerkOverleden(resultaat);
+            if(type == "dominees")
+                VerwerkDominees(resultaat);
         }
     }
 
@@ -263,21 +286,6 @@ public class RequestData : MonoBehaviour
         }
     }
 
-    private bool IsDatumRegel(string regel)
-    {
-        string datum = regel.Trim().TrimEnd(';').Trim();
-
-        DateTime resultaat;
-
-        return DateTime.TryParseExact(
-            datum,
-            "dd-MM-yyyy",
-            System.Globalization.CultureInfo.InvariantCulture,
-            System.Globalization.DateTimeStyles.None,
-            out resultaat
-        );
-    }
-
     private void VerwerkGemeente(string data)
     {
         data = data.Trim();                                         // Versimpel de string (Verwijderd overbodige spaties/witregels).
@@ -334,26 +342,51 @@ public class RequestData : MonoBehaviour
     // Daarvoor gebruik ik een package genaamd Newsoft Json. (Zie: https://www.newtonsoft.com/json)
     private void VerwerkOverleden(string data)
     {
-        data = data.Trim();                                                     // Versimpel de string (Verwijderd overbodige spaties/witregels).
+        data = data.Trim();                                                     // Versimpel de string (Verwijdert overbodige spaties/witregels).
 
         JObject json = JObject.Parse(data);                                     // De hele .json tekst wordt omgezet naar een JObject. Hier kan Newsoft.Json makkelijk mee werken.
 
-        JObject eersteEntry = (JObject)json.First.First;                        // Pak de "0" weg uit de Json, zodat hier geen problemen mee komen.
+        JObject eersteEntry = (JObject)json.First.First;                        // Pak de "0" weg uit de Json, zodat we hieruit het kopje "Overlden" kunnen halen.
 
         string overledenText = eersteEntry["overleden"].ToString();             // Pak de "overleden" data uit de JObject en zet deze om naar een string.
             
         string[] regelsInData = overledenText.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);        //  Splits de data per regel ('\r\n' = nieuwe regel).
 
-        foreach (string regel in regelsInData)                                  //  Voor elke regel die we hebben gesplitst.
+        foreach (string regel in regelsInData)                                  //  Voor elke regel die we hebben gesplitst:
         {
-            string regelSchoon = regel.Trim();                                  // Schoon de inhoud op (Verwijderd overbodige spaties/witregels).
+            string regelSchoon = regel.Trim();                                  // Schoon de inhoud op (Verwijdert overbodige spaties/witregels).
 
-            Overleden overleden = VerplaatsOverledenNaarClass(regelSchoon);     // Stuur de regel door naar de functie die het omzet naar een class.
+            Overleden overleden = VerplaatsOverledenNaarClass(regelSchoon);     // Stuur de regel door naar de functie die hem omzet naar een class.
 
             if(overleden == null)                                               // Als er een lege entery wordt gevonden, slaan we deze over.
                 continue;    
 
             LogOverledenInhoud(overleden);                                      // Log (voor nu) alle informatie uit de 'Overleden' class.
+        }
+    }
+
+    private void VerwerkDominees(string data)
+    {
+        data = data.Trim();                                                     // Versimpel de string (Verwijdert overbodige spaties/witregels).
+
+        JObject json = JObject.Parse(data);                                     // De hele .json tekst wordt omgezet jaar een JObject. Hier kan Newsoft.Json makkelijk mee werken.
+
+        JObject eersteEntry = (JObject)json.First.First;                        // Pak de "0" weg uit de Json, zodat we hieruit het kopje "Kandidaten" kunnen halen.
+
+        string domineesText = eersteEntry["kandidaten"].ToString();             // Pak de "Kandidaten" data uit de JObject en zet deze om naar een string.
+
+        string[] regelsInData = domineesText.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);       // Split de data per regel ('\r\n'= nieuwe regel).
+
+        foreach (string regel in regelsInData)                                  // Voor elke regel die we hebben gesplitst:
+        {
+            string regelSchoon = regel.Trim();                                  // Schoon de inhoud op (Verwijdert overbodige spaties/witregels).
+
+            Dominee dominee = VerplaatsDomineeNaarClass(regelSchoon);           // Stuur de regel door neer de functie die hem omzet naar een class.
+
+            if(dominee == null)                                                 // Als er een lege entery wordt gevonden, slaan we deze over.
+                continue;
+
+            LogDomineeInhoud(dominee);                                          // Log (voor nu) alle informatie uit de 'Dominee' class.
         }
     }
     
@@ -389,9 +422,9 @@ public class RequestData : MonoBehaviour
     // is het voor hem makkelijk gemaakt om de data te splitsen met ';'
     // Deze functie haalt alle data weer los van elkaar en stopt het
     // in een nieuwe class. Dit kan later in een UI makkelijk worden weergegeven.
-    private Overleden VerplaatsOverledenNaarClass(string beroepRegel)
+    private Overleden VerplaatsOverledenNaarClass(string overledenRegel)
     {
-        string[] velden = beroepRegel.Split(";");                   // Splitst alle velden in aparte strings. De velden zijn in de database namelijk gescheiden door een ':'.
+        string[] velden = overledenRegel.Split(";");                // Splitst alle velden in aparte strings. De velden zijn in de database namelijk gescheiden door een ';'.
 
         if (velden.Length < 7)                                      // Sla ongeldige/kop-regels over. Er zijn blijvoorbeeld regels als: ";;;;;-;;" en "; voornemen beroep ;;;;;;".                                         
             return null;
@@ -399,7 +432,7 @@ public class RequestData : MonoBehaviour
         if(string.IsNullOrWhiteSpace(velden[1]))                    // Leeg beroep terugkeren als er geen data in zit.
             return null;
         
-        Overleden overleden = new Overleden();                      // Maak een nieuwe instantie van een 'Beroep' class aan.
+        Overleden overleden = new Overleden();                      // Maak een nieuwe instantie van een 'Overleden' class aan.
 
         // Vul elk veld 1 voor 1 in de juiste volgorde in:
         overleden.naam              = velden[0].Trim();
@@ -409,6 +442,30 @@ public class RequestData : MonoBehaviour
         overleden.bijzonderheden    = velden[4].Trim();
 
         return overleden;                                            // Stuur de ingevulde 'Overlden' class terug.
+    }
+
+    private Dominee VerplaatsDomineeNaarClass(string domineeRegel)
+    {
+        string[] velden = domineeRegel.Split(";");                  // Spltst alle velden in aparte string. De velden zijn in de database namelijk gescheiden door een ';'.
+
+        if(velden.Length < 7)                                       // Sla ongedige/kop-regls over. Er zijn bijvoorbeeld regels als: ";;;;;-;;" en "; voornemen beroep ;;;;;;".
+            return null;
+
+        if(string.IsNullOrWhiteSpace(velden[1]))                    // Als het eerste veld leeg is, slaan we deze ook over.
+            return null;
+
+        Dominee dominee = new Dominee();                            // Maak een nieuwe instantie van een 'Dominee' class aan.
+
+        // Vul elk veld 1 voor 1 in de juist volorde in:
+        dominee.naam                = velden[0].Trim();
+        dominee.woonplaats          = velden[1].Trim();
+        dominee.kerk                = velden[2].Trim();
+        dominee.publicatiedatum     = velden[3].Trim();
+        dominee.beroependeGemeente  = velden[4].Trim();
+        dominee.intredeDatum        = velden[5].Trim();
+        dominee.ber                 = velden[6].Trim();
+
+        return dominee;
     }
 
     IEnumerator HaalAfbeeldingOp(string url, RawImage output)
@@ -434,8 +491,6 @@ public class RequestData : MonoBehaviour
     // de data goed gesplitst wordt.
     private void LogBeroepInhoud(Beroep beroep)
     {
-        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
-
         Debug.Log(
             $"Beroep ontvangen:\n" +
             $"ber: {beroep.ber}\n" +
@@ -458,6 +513,8 @@ public class RequestData : MonoBehaviour
             $"ber2: {beroep.ber2}\n" +
             $"datum: {beroep.datum} \n" +
             $"\n ====================================== \n \n"; // Simpele scheider + een witregel voor overzichtelijkheid.
+        
+        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
     }
 
     // Een simpele test-functie om de inhoud van een Gemeente
@@ -465,8 +522,6 @@ public class RequestData : MonoBehaviour
     // de data goed gesplitst wordt.
     private void LogGemeenteInhoud(Gemeente gemeente)
     {
-        rect.verticalNormalizedPosition = 1;                                    // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
-
         StartCoroutine(HaalAfbeeldingOp(gemeente.logo, gemeenteLogoImage));     // Haal de logo-afbeelding op en stel deze in, ondertussen kan de rest van de functie runnen.
 
         string output =
@@ -525,15 +580,15 @@ public class RequestData : MonoBehaviour
 
         // Ook in de UI zetten
         beroepenOutputText.text = output;
+
+        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
     }
 
     // Een simpele test-functie om de inhoud van een beroep
     // in de console te loggen, zodat ik kan zien of
     // de data goed gesplitst wordt.
     private void LogOverledenInhoud(Overleden overleden)
-    {
-        rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
-        
+    {   
         Debug.Log(
             $"Overleden ontvangen:\n" +
             $"naam: {overleden.naam}\n" +
@@ -552,5 +607,35 @@ public class RequestData : MonoBehaviour
             $"gemeentes: {overleden.gemeentes}\n" +
             $"bijzonderheden: {overleden.bijzonderheden}" +
             $"\n ====================================== \n \n"; //Simpele scheider + een witregel voor overzichtelijkheid.
+
+            rect.verticalNormalizedPosition = 1;                        // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
+    }
+
+    private void LogDomineeInhoud(Dominee dominee)
+    {
+        Debug.Log(
+            $"Dominee ontvangen:\n" +
+            $"naam: {dominee.naam}\n" +
+            $"woonplaats: {dominee.woonplaats}\n" +
+            $"kerk: {dominee.kerk}\n" +
+            $"publicatiedatum: {dominee.publicatiedatum}\n" +
+            $"beroepende gemeente: {dominee.beroependeGemeente}\n" +
+            $"intrede datum: {dominee.intredeDatum}\n" +
+            $"ber: {dominee.ber}\n"
+        );
+
+        // Vul een tekstelement in om in de UI ook de beroepen te kunnen zien.
+        beroepenOutputText.text +=
+            $"Dominee ontvangen:\n" +
+            $"naam: {dominee.naam}\n" +
+            $"woonplaats: {dominee.woonplaats}\n" +
+            $"kerk: {dominee.kerk}\n" +
+            $"publicatiedatum: {dominee.publicatiedatum}\n" +
+            $"beroepende gemeente: {dominee.beroependeGemeente}\n" +
+            $"intrede datum: {dominee.intredeDatum}\n" +
+            $"ber: {dominee.ber}\n" +
+            $"\n ====================================== \n \n"; //Simpele scheider + een witregel voor overzichtelijkheid.
+
+        rect.verticalNormalizedPosition = 1;            // Zet de ScrollRect helemaal naar boven (makkelijkere UI bediening - puur voor testen).
     }
 }
