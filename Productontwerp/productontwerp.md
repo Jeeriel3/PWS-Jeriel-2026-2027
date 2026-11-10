@@ -1,5 +1,5 @@
 ## Productontwerp Dominees
-Voordat ik bogon aan het bouwen van mijn app, heb ik een productontwerp gemaakt. Dit ontwerp bevat de meeste pagina's die mijn app moet hebben. Ik heb in dit ontwerp geprobeerd om de kleuren van Dominees.nl te gebruiken en deze in een modern en simpel ontwerp te plaatsen. Voor inspiratie van mijn UI heb ik veel gekeken op websites als Mobbin. Deze bevatten veel moderne ontwerpen van grote bedrijven.
+Voordat ik bogon aan het bouwen van mijn app, heb ik een productontwerp gemaakt. Dit ontwerp bevat de meeste pagina's die mijn app moet hebben. Ik heb in dit ontwerp geprobeerd om de kleuren van Dominees.nl te gebruiken en deze in een modern en simpel ontwerp te plaatsen. Voor inspiratie van mijn UI heb ik veel gekeken op websites als Mobbin. Deze bevatten veel moderne ontwerpen van grote bedrijven. Het ontwerp en alle functies die het biedt, is gebasserd op de eisen uit mijn programma van eisen.
 
 # De Homepagina
 <img width="200" height=auto alt="Homepagina" src="https://github.com/user-attachments/assets/418651c8-5631-4d48-8731-214243e67822" />
