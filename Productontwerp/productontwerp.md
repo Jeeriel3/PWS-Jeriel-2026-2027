@@ -11,10 +11,12 @@ Voor mijn het ontwerp van 'Dominees' heb ik geprobeerd om de huisstijl van de we
 > — Jakobs’s Law
 
 Apps moeten dus bekend werken en aanvoelen. Zo moet de werking van de app dus niet te veel afwijken van de originele website Dominees.nl, aangezien gebruikers eenzelfde soort ervaring verwachten. Daarom heb ik voor 2 blauwe hoofdkleuren gekozen: `#2596be` en `#67bed9`. Ik gebruik deze kleuren vaak in een ronde gradient. Deze is lichtblauw vanbinnen en donkerder blauw aan de buitenkant. Dit maakt grote kleurvlakken minder saai, en voegt wat "diepte" toe aan sommige onderdelen. Dit is hoe dat eruit ziet:
-<img align="left" width="200" height=auto alt="Huisstijl-Dominees-modified" src="https://github.com/user-attachments/assets/100f0c65-074e-433a-af8e-6b7004c6ec56"/> Huisstijl met ronde gradient. </br></br></br></br></br></br></br></br></br></br>
-<img align="left" width="200" height=auto alt="Huisstijl-Dominees-modified" src="https://github.com/user-attachments/assets/100f0c65-074e-433a-af8e-6b7004c6ec56"/> Huisstijl donkerblauw (`#2596be`) </br></br></br></br></br></br></br></br></br></br>
-<img align="left" width="200" height=auto alt="Huisstijl-Dominees-modified" src="https://github.com/user-attachments/assets/100f0c65-074e-433a-af8e-6b7004c6ec56"/> Huisstijl lichtblauw (`#67bed9`)
-</br></br></br></br></br></br></br></br></br></br>
+| Afbeelding | Omschrijving | Afbeelding | Omschrijving |
+| ---------- |------------- | ---------- | ------------ |
+| <img width="200" height="auto" alt="Huisstijl-Dominees-modified (1)" src="https://github.com/user-attachments/assets/0599c44f-8323-4c1a-b17c-826823f822df"/> | Huisstijl met ronde gradient. | <img width="200" height="auto" alt="Logo - Dominees-modified" src="https://github.com/user-attachments/assets/2396b9d9-88d4-461d-bfe4-156a4f711237" /> | Logo van de app. Dit logo is nog niet definitief, maar ik heb geprobeerd de oude D (zie afbeelding hieronder) te combineren met mijn moderne gradient.
+| <img align="left" width="200" height="auto" alt="Huisstijl Dominees nl - Donkerblauw" src="https://github.com/user-attachments/assets/854119f3-7aca-4f27-8355-9a64d50e1742" /> | Huisstijl donkerblauw (`#2596be`) |<img width="158" height="159" alt="Screenshot 2026-11-10 12 32 02" src="https://github.com/user-attachments/assets/b8364bc5-d1e9-4e7d-bc44-aaa58bb81de2" /> | Het logo van de website.
+| <img align="left" width="200" height="auto" alt="Huisstijl Dominees nl - Lichtblauw" src="https://github.com/user-attachments/assets/43a2c035-bcd1-44b4-8f2d-b507817b4100" /> | Huisstijl lichtblauw (`#67bed9`) | <img width="200" height="auto" alt="Screenshot 2026-11-10 12 33 15" src="https://github.com/user-attachments/assets/e4203320-2625-463c-be72-53676af200b7" /> | Lichtblauwe kleur van de website.
+
 
 ## Het ontwerp per pagina
 ### De Homepagina
