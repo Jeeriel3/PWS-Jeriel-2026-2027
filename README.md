@@ -2,6 +2,9 @@
 
 Deze repository bevat de volledige broncode van het Unity-project van de Dominees app gemaakt voor mijn profielwerkstuk. Ik heb veel tijd besteed aan het goed opmaken van de code en het voorzien van commentaal voor (bijna) elke regel. Neem vooral een kijkje in de belangrijke bestanden, of bekijk het [productontwerp](Productontwerp/productontwerp.md).
 
+>[!NOTE]
+> Aangezien ik de volledige broncode van de Unity app heb geupload, staan in deze repository heel bestanden van Unity zelf. Dit maakt het mogelijk om zelf de broncode (mapje `Dominees`) te downloaden en te openen in Unity. Alle bestanden die ik heb geschreven staan in [`Dominees/Assets/`](Dominees/Assets). Dit is dus ook de map waar je moet kijken om mijn app te vinden :)
+
 ## Belangrijke scripts:
 **[`Assets/Scripts/MainScene/MenusManager.cs`](Dominees/Assets/Scripts/MainScene/MenusManager.cs) (Het 'hart'):**
 Dit script bevat alle belangrije logica voor het 'hart' van de app. Zo vindt je hier de logica voor de `bottom navigation`, dataverwerking en controle van animaties en panelen (zoals het `filterpaneel`).
